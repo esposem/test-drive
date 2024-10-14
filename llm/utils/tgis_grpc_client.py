@@ -69,7 +69,7 @@ class TgisGrpcClient:
             requests=[generation_pb2_grpc.generation__pb2.GenerationRequest(text=text)],
         )
         result = self.generation_service_stub.Generate(request=request)
-        print(result)
+        # print(result)
         return result
 
     def __enter__(self):
