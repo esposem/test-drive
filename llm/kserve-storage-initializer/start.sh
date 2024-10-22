@@ -3,7 +3,7 @@
 set -ex
 
 KS=${KS:-"kserve-storage-initializer"}
-TAG=${TAG:-"no-attestation15"}
+TAG=${TAG:-"no-attestation16"}
 
 REPO=${REPO:-"quay.io/eesposit"}
 
