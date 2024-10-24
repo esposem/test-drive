@@ -31,7 +31,7 @@ attestation() {
         sudo apt install -y python3.10-venv
 
         #source ./prodtest/bin/activate
-        sudo pip3 install .
+        sudo pip3 install . --break-system-packages
         sudo python3 -m verifier.cc_admin
         popd >/dev/null
 
