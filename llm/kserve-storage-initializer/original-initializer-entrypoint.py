@@ -5,14 +5,15 @@ import sys
 import logging
 import shutil
 import subprocess
-
-from kserve.storage import Storage
-
+import warnings
 import urllib3
+
+logging.basicConfig(level = logging.INFO)
+
+warnings.filterwarnings("ignore", category=UserWarning, module="pydantic")
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-import warnings
-warnings.filterwarnings("ignore", category=UserWarning, module="pydantic")
+from kserve.storage import Storage
 
 if len(sys.argv) != 3:
     print("Usage: initializer-entrypoint src_uri dest_path")
@@ -49,7 +50,7 @@ logging.info("Download key...")
 out = subprocess.check_output(['/bin/ls', 'keys'])
 logging.info('ls keys\n' + out.decode('ascii'))
 # out =subprocess.check_output(['/bin/curl', '-L', 'http://127.0.0.1:8006/cdh/resource/default/kbsres1/key.bin', '-o', key_file])
-out =subprocess.check_output(['/bin/curl', '-L', 'https://people.redhat.com/eesposit/key.bin', '-o', key_file])
+out =subprocess.check_output(['/bin/curl', '-L', '-k', 'https://people.redhat.com/eesposit/key.bin', '-o', key_file])
 logging.info(out)
 out = subprocess.check_output(['/bin/ls', 'keys'])
 logging.info('ls keys\n' + out.decode('ascii'))
