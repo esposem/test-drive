@@ -11,8 +11,12 @@ RUN apt-get update && apt-get install -y \
     sudo \
     tzdata \
     curl \
+    libgl1 \
+    binutils \
+    xserver-xorg-core \
     && rm -rf /var/lib/apt/lists/*
 
+RUN pip install pip --break-system-packages
 RUN pip3 install kserve boto3 urllib3 pydantic numpy pandas --break-system-packages
 
 ADD fenc /bin
@@ -22,6 +26,13 @@ RUN chmod +x /cgpu-h100-auto-onboarding-linux/cgpu-onboarding-package/step-2-att
 WORKDIR /storage-initializer/scripts
 
 RUN mkdir keys && chmod 777 keys
+
+RUN mkdir logs
+RUN mkdir local_gpu_verifier
+RUN touch logs/current-operation.log
+RUN chmod 777 logs/current-operation.log
+RUN touch logs/all-operation.log
+RUN chmod 777 logs/all-operation.log
 
 # get rid of old entrypoint
 # RUN rm initializer-entrypoint

@@ -3,7 +3,7 @@
 set -ex
 
 KS=${KS:-"text-generation-launcher"}
-TAG=${TAG:-"no-attestation5"}
+TAG=${TAG:-"model-encrypted"}
 
 REPO=${REPO:-"quay.io/eesposit"}
 

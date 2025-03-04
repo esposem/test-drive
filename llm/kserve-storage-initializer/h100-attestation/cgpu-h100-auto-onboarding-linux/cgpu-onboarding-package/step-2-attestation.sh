@@ -13,7 +13,7 @@ MAX_RETRY=3
 
 attestation() {
     # verify nvdia gpu driver has been install correctly.
-    sudo nvidia-smi -pm 1
+    nvidia-smi -pm 1
     current_driver_interface_version=$(nvidia-smi --query-gpu=driver_version --format=csv,noheader)
     echo -e "$REQUIRED_DRIVER_INTERFACE_VERSION\n$current_driver_interface_version" | sort --check=quiet --version-sort
     if [ "$?" -ne "0" ]; then
@@ -26,13 +26,13 @@ attestation() {
         pushd .
         cd local_gpu_verifier && echo "Open verifier folder successfully!"
 
-        sudo apt install -y python3-pip
-        sudo pip install -U pip
-        sudo apt install -y python3.10-venv
+        # apt install -y python3-pip
+        # pip install -U pip --break-system-packages
+        # apt install -y python3.10-venv
 
         #source ./prodtest/bin/activate
-        sudo pip3 install . --break-system-packages
-        sudo python3 -m verifier.cc_admin
+        # pip3 install . --break-system-packages
+        # python3 -m verifier.cc_admin
         popd >/dev/null
 
         lockError=$(cat logs/current-operation.log | grep "Could not get lock")
@@ -42,8 +42,8 @@ attestation() {
             echo "Found lock error retry attestation step."
             echo "Retry left:"
             echo $MAX_RETRY
-            sudo apt-get install -y libgl1 binutils xserver-xorg-core
-            sudo apt --fix-broken install
+            # apt-get install -y libgl1 binutils xserver-xorg-core
+            # apt --fix-broken install
             attestation "$@"
         fi
     fi
